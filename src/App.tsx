@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './component/Header/Header';
+import Login from './component/Login/Login';
+import Register from './component/Register/Register';
+import Product from './component/Product/ProductList';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState<string | null>(null);
+
+  const handleLogin = (username: string) => {
+    setUser(username);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header user={user} onLogout={handleLogout} />
+      <div className="container mt-4">
+        <Routes>
+          <Route path="/" element={<Login onLogin={handleLogin} />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/products" element={<Product />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

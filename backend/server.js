@@ -27,16 +27,16 @@ var database = client.db(DATABASENAME);
 
 // Middleware to check if the user is authenticated
 const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  if(!token) return res.sendStatus(401);
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.sendStatus(401);
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if(err) return res.sendStatus(403);
+    if (err) return res.sendStatus(403);
     req.user = user;
     next();
-  })
-}
+  });
+};
 
 app.listen(PORT, () => {
   try {
@@ -101,7 +101,7 @@ app.post("/login", async (req, res) => {
 });
 
 // Endpoint to list products
-app.get("/products", authenticateToken, async (req, res) => {
+app.get("/products", async (req, res) => {
   try {
     const productsCollection = database.collection("products");
     const products = await productsCollection.find().toArray();

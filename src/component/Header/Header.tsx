@@ -11,6 +11,7 @@ const Header = ({ user, onLogout }: HeaderProps) => {
 
   const handleLogout = () => {
     onLogout();
+    localStorage.removeItem('token'); // Remove the token from localStorage
     navigate('/login');
   };
 

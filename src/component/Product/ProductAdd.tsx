@@ -8,7 +8,7 @@ interface ProductModalProps {
   onProductAdded: () => void;
 }
 
-const ProductModal = ({ show, onHide, onProductAdded }: ProductModalProps) => {
+const ProductAdd = ({ show, onHide, onProductAdded }: ProductModalProps) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -77,4 +77,4 @@ const ProductModal = ({ show, onHide, onProductAdded }: ProductModalProps) => {
   );
 };
 
-export default ProductModal;
+export default ProductAdd;

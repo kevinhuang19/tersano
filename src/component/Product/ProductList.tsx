@@ -11,6 +11,7 @@ const ProductList = () => {
   const [modalShow, setModalShow] = useState<boolean>(false);
   const [editModalShow, setEditModalShow] = useState<boolean>(false);
   const [currentProductId, setCurrentProductId] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -29,8 +30,12 @@ const ProductList = () => {
     loadProducts();
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
   const handleProductAdded = () => {
-    // Reload products after adding a new one
     const loadProducts = async () => {
       try {
         const data = await fetchProducts();
@@ -63,9 +68,11 @@ const ProductList = () => {
           {error}
         </div>
       )}
-      <div style={{ marginBottom: "16px" }}>
-        <Button onClick={() => setModalShow(true)}>Add Product</Button>
-      </div>
+      {isLoggedIn && (
+        <div style={{ marginBottom: "16px" }}>
+          <Button onClick={() => setModalShow(true)}>Add Product</Button>
+        </div>
+      )}
       <Row>
         {products.length > 0 ? (
           products.map((product) => (
@@ -80,6 +87,7 @@ const ProductList = () => {
                 setEditModalShow(true);
               }}
               onDelete={() => handleProductDeleted(product._id)}
+              showActions={isLoggedIn} // Pass the logged-in status to Product component
             />
           ))
         ) : (

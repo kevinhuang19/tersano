@@ -2,7 +2,7 @@
 
 # SETUP
 For this challenge, I utlized MongoDB for my database. You will need that in order for this to work.
-You will also need to modify the .env file and fill in the proper information.
+You will also need to add a .env file in your backend folder with proper information.
 
 `DB_URI` set this to your MongoDB connection string <br> <br>
 `PORT` you can set this to anything, mine was set to 4000 <br> <br>
@@ -16,5 +16,6 @@ You will also need to modify the .env file and fill in the proper information.
 3. Terminal Two, make sure you are in the tersano folder
 4. `npm install` -> `npm start` to run the application
    
-
+# VIDEO DEMO
+https://drive.google.com/file/d/1IpIBtj6QXeoV-lAy2iQjDHnnPF_x7wa3/view?usp=sharing
 

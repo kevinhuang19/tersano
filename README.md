@@ -12,7 +12,7 @@ You will also need to modify the .env file and fill in the proper information.
 
 
 1. Terminal One, change directory into the backend folder.
-2. `npm instal`l -> `node server.js` to run the backend
+2. `npm instal` -> `node server.js` to run the backend
 3. Terminal Two, make sure you are in the tersano folder
 4. `npm install` -> `npm start` to run the application
    

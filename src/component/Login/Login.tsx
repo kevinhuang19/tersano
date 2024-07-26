@@ -8,12 +8,12 @@ interface LoginProps {
   onLogin: (username: string) => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login = ({ onLogin } : LoginProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -22,10 +22,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setSuccess('');
 
     try {
+      //check if login is successfully before setting name and redirect
       const result = await loginUser(username, password);
-      setSuccess('Login successful!');
-      onLogin(username); // Notify parent about login
-      navigate('/products'); // Redirect to /product page
+      if(result){
+        setSuccess('Login successful!');
+        onLogin(username);
+        navigate('/products'); // Redirect to /product page
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError('Login failed: ' + error.message);

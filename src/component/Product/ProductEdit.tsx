@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { fetchProductById, updateProduct } from "../../api/auth"; // Import the update function
+import { fetchProductById, updateProduct } from "../../api/auth";
 
 interface ProductEditProps {
   show: boolean;
@@ -35,7 +35,7 @@ const ProductEdit = ({ show, onHide, onProductUpdated, productId }: ProductEditP
     e.preventDefault();
     try {
       await updateProduct(productId, { name, price: parseFloat(price), description });
-      onProductUpdated(); // Notify parent component
+      onProductUpdated();
       onHide(); // Hide modal
     } catch (error) {
       console.error("Error updating product:", error);

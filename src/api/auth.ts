@@ -3,7 +3,7 @@ const API_URL = "http://localhost:4000";
 // Function to get the stored token
 const getToken = () => localStorage.getItem('token');
 
-// Register user function remains the same
+// Register user function
 export const registerUser = async (username: string, password: string) => {
   try {
     const response = await fetch(`${API_URL}/register`, {
@@ -32,7 +32,7 @@ export const registerUser = async (username: string, password: string) => {
   }
 };
 
-// Login user function remains the same
+// Login user function
 export const loginUser = async (username: string, password: string) => {
   try {
     const response = await fetch(`${API_URL}/login`, {
@@ -49,8 +49,9 @@ export const loginUser = async (username: string, password: string) => {
     }
 
     const data = await response.json();
-    // Save the token to localStorage
+    // Save the token to localStorage, so we can use them again later
     localStorage.setItem('token', data.token);
+    localStorage.setItem('username', data.username);
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -66,11 +67,9 @@ export const loginUser = async (username: string, password: string) => {
 // Fetch products function with authentication
 export const fetchProducts = async () => {
   try {
-    const token = getToken();
     const response = await fetch(`${API_URL}/products`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
     });
     
@@ -96,6 +95,7 @@ export const addProduct = async (product: {name: string; price: number; descript
     const response = await fetch(`${API_URL}/products`, {
       method: "POST",
       headers: {
+        //we have to use token to check if user is logged in to allow modification
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
       },
@@ -125,6 +125,7 @@ export const updateProduct = async (id: string, product: {name: string; price: n
     const response = await fetch(`${API_URL}/products/${id}`, {
       method: 'PUT',
       headers: {
+        //we have to use token to check if user is logged in to allow modification
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -147,6 +148,7 @@ export const fetchProductById = async (id: string) => {
     const token = getToken();
     const response = await fetch(`${API_URL}/products/${id}`, {
       headers: {
+        //we have to use token to check if user is logged in to allow modification
         'Authorization': `Bearer ${token}`,
       },
     });
@@ -168,6 +170,7 @@ export const deleteProduct = async (id: string) => {
     const response = await fetch(`${API_URL}/products/${id}`, {
       method: 'DELETE',
       headers: {
+        //we have to use token to check if user is logged in to allow modification
         'Authorization': `Bearer ${token}`,
       },
     });

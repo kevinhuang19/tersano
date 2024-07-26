@@ -4,13 +4,13 @@ import { Button, Container, Card } from 'react-bootstrap';
 import { registerUser } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
 
-const Register: React.FC = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -24,10 +24,11 @@ const Register: React.FC = () => {
     setSuccess('');
 
     try {
+      //call function to determine if user is valid
       await registerUser(username, password);
       setSuccess('Registration successful!');
       setTimeout(() => {
-        navigate('/login'); // Redirect to login page after successful registration
+        navigate('/login');
       }, 1000); // Delay for success message display
     } catch (error) {
       if (error instanceof Error) {

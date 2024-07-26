@@ -21,7 +21,7 @@ const ProductAdd = ({ show, onHide, onProductAdded }: ProductModalProps) => {
       setName("");
       setPrice("");
       setDescription("");
-      onProductAdded(); // Notify parent component
+      onProductAdded();
       onHide(); // Hide modal
     } catch (error) {
       console.error("Error adding product:", error);
@@ -29,6 +29,7 @@ const ProductAdd = ({ show, onHide, onProductAdded }: ProductModalProps) => {
   };
 
   return (
+    //displaying modal depending on the prop given from ProductList
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Add New Product</Modal.Title>

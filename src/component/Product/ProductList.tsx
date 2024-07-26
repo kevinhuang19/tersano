@@ -16,6 +16,7 @@ const ProductList = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
+        //checking for products in database, else produce error message
         const data = await fetchProducts();
         setProducts(data);
       } catch (error) {
@@ -38,6 +39,7 @@ const ProductList = () => {
   const handleProductAdded = () => {
     const loadProducts = async () => {
       try {
+        //when new products are added refresh the list
         const data = await fetchProducts();
         setProducts(data);
       } catch (error) {
@@ -48,12 +50,12 @@ const ProductList = () => {
         }
       }
     };
-
     loadProducts();
   };
 
   const handleProductDeleted = async (id: string) => {
     try {
+      //deletes product selected as well as update list
       await deleteProduct(id);
       setProducts(products.filter(product => product._id !== id));
     } catch (error) {
@@ -87,7 +89,7 @@ const ProductList = () => {
                 setEditModalShow(true);
               }}
               onDelete={() => handleProductDeleted(product._id)}
-              showActions={isLoggedIn} // Pass the logged-in status to Product component
+              showActions={isLoggedIn} // if the user is logged in, the add product, edit and delete button will show
             />
           ))
         ) : (
@@ -96,7 +98,7 @@ const ProductList = () => {
           </Col>
         )}
       </Row>
-
+        {/* modal will popup when pressed*/}
       <ProductModal
         show={modalShow}
         onHide={() => setModalShow(false)}

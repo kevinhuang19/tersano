@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,11 +8,27 @@ interface HeaderProps {
 }
 
 const Header = ({ user, onLogout }: HeaderProps) => {
+  const [username, setUsername] = useState<string | null>(user || null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    //checks for local variables so if user refreshs information stays
+    if (!user) {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        const storedUsername = localStorage.getItem('username');
+        setUsername(storedUsername);
+      }
+    } else {
+      setUsername(user);
+    }
+  }, [user]);
 
   const handleLogout = () => {
     onLogout();
-    localStorage.removeItem('token'); // Remove the token from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setUsername(null);
     navigate('/login');
   };
 
@@ -19,15 +36,15 @@ const Header = ({ user, onLogout }: HeaderProps) => {
     <Nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Nav.Item className="navbar-brand">
-          <span className="store-name">Your Store</span>
+          <Nav.Link as={Link} to="/products"><span style={{color: 'black'}}>Tersano Store</span></Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link as={Link} to="/products">Products</Nav.Link>
         </Nav.Item>
         <Nav className="">
-          {user ? (
+          {username ? (
             <div className="d-flex align-items-center">
-              <span className="me-3">Welcome, {user}</span>
+              <span className="me-3">Welcome, {username}</span>
               <button className="btn btn-danger" onClick={handleLogout}>
                 Logout
               </button>
